@@ -1,8 +1,31 @@
+require('./config')
+
+// Imports
 const express = require('express')
+const bodyParser = require('body-parser')
+
 const app = express()
 
-const port = process.env.PORT || 3000
+// Middlewares
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
-app.get('/', (req, res) => res.json({nombre: 'Rubén', apellidos: 'Cabrera Royo', edad: 21}))
+app.get('/', (req, res) => {
+    let body = req.body
 
-app.listen(port, () => console.log(`Servidor iniciado en el puerto ${port}`))
+    if(body.nombre !== undefined){
+        res.status(200).json({
+            recibido: true,
+            body
+        })
+    }
+    else{
+        res.status(400).json({
+            error: 7,
+            message: 'Esto tendría que dar error'
+        })
+    }
+
+})
+
+app.listen(process.env.PORT, () => console.log(`Servidor iniciado en el puerto ${process.env.PORT}`))
