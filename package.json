@@ -15,12 +15,10 @@
     "express": "^4.17.1",
     "mongoose": "^5.10.11",
     "mongoose-unique-validator": "^2.0.3",
-    "underscore": "^1.11.0"
+    "underscore": "^1.11.0",
+    "colors": "^1.4.0"
   },
   "engines": {
     "node": "12.x"
-  },
-  "devDependencies": {
-    "colors": "^1.4.0"
   }
 }
