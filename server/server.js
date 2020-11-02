@@ -4,6 +4,7 @@ require('./config')
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const auth = require('./auth')
 
 const app = express()
 
@@ -12,14 +13,15 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 // Routes
-app.use('/usuario', require('../routes/usuario'))
+app.use('/usuario', auth.verificaToken, require('../routes/usuario'))
+app.use('/login', require('../routes/login'))
 
 mongoose.connect('mongodb://localhost/cafe',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
-        useFindAndModify: true
+        useFindAndModify: false
     },
     (err, res) =>{
         if(err) throw err

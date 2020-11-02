@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const _ = require('underscore')
 const uniqueValidator = require('mongoose-unique-validator')
 
 let Schema = mongoose.Schema
@@ -42,5 +43,11 @@ let usuarioSchema = new mongoose.Schema({
 })
 
 usuarioSchema.plugin(uniqueValidator, {message: 'No pueden haber dos personas registradas con el mismo correo'})
+
+usuarioSchema.methods.toJSON = function(){
+    let user = this.toObject()
+
+    return _.pick(user, ['_id', 'nombre', 'email', 'role', 'google'])
+}
 
 module.exports = mongoose.model('usuario', usuarioSchema)
